@@ -1,0 +1,114 @@
+\documentclass[diploma]{Styles/softlab-thesis}
+
+%%%
+%%%  The document
+%%%
+
+% PACKAGE SETTINGS =============================================================
+\usepackage{textcomp}
+\usepackage{color}
+\usepackage{listings}
+
+%----------------------------------------------------------------------------------------
+%	LISTINGS (CODE) TEMPLATE4$  $
+%----------------------------------------------------------------------------------------
+
+\lstset
+{
+	keywordstyle=\bfseries\ttfamily\color[rgb]{0,0,1},
+	identifierstyle=\ttfamily,
+	commentstyle=\color[rgb]{0.133,0.545,0.133},
+	stringstyle=\ttfamily\color[rgb]{0.627,0.126,0.941},
+	showstringspaces=false,
+	basicstyle=\small,
+	numberstyle=\footnotesize,
+	numbers=left,
+	stepnumber=1,
+	numbersep=10pt,
+	tabsize=2,
+	breaklines=true,
+	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+	breakatwhitespace=false,
+	aboveskip={1.5\baselineskip},
+  	columns=fixed,
+  	upquote=true,
+  	extendedchars=true,
+	frame=single
+	inputencoding=utf8
+}
+
+
+
+\begin{document}
+
+%%%  Title page
+
+\frontmatter
+
+\title{Σχεδίαση και Υλοποίηση μιας Καταπληκτικής Γλώσσας Προγραμματισμού}
+\author{Ρεβέκκα Παλαιολόγου\\Φωτόπουλος Ηλίας}
+\date{Σεπτέμβριος 2015}
+\datedefense{08}{10}{2015}
+
+\supervisor{Διονύσιος-Δημήτριος Κουτσούρης}
+\supervisorpos{Καθηγητής Ε.Μ.Π.}
+
+\committeeone{Διονύσιος-Δημήτριος Κουτσούρης}
+\committeeonepos{Καθηγητής Ε.Μ.Π.}
+\committeetwo{Πέτρος X. Παπαδόπουλος}
+\committeetwopos{Επίκ. Καθηγητής Ε.Μ.Π.}
+\committeethree{Γεώργιος X. Νικολάου}
+\committeethreepos{Καθηγητής Ε.Κ.Π.Α.}
+
+\TRnumber{CSD-SW-TR-42-14}  % number-year, ask nickie for the number
+\department{Τομέας Συστημάτων Μετάδοσης Πληροφορίας και Τεχνολογίας Υλικών}
+
+\maketitle
+
+
+%%%  Abstract
+
+\include{abstract}
+
+%%%  Various tables
+
+\tableofcontents
+\listoftables
+\listoffigures
+
+
+%%%  Main part of the book
+
+\mainmatter
+
+\include{intro}
+\include{conclusion}
+
+%%%  Bibliography
+
+\bibliographystyle{softlab-thesis}
+\bibliography{references}
+
+
+%%%  Appendices
+
+\backmatter
+
+\appendix
+
+\chapter{Ευρετήριο συμβολισμών}
+
+$A \rightarrow B$ : συνάρτηση από το πεδίο $A$ στο πεδίο $B$.
+
+\chapter{Ευρετήριο γλωσσών}
+
+\textbf{Haskell} : η γλώσσα της ζωής μου.
+
+\chapter{Ευρετήριο αριθμών}
+
+42 : life, the universe and everything.
+
+
+%%%  End of document
+
+\end{document}
