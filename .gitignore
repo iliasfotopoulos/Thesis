@@ -8,6 +8,8 @@
 *.toc
 *.tex~
 *.cls~
+*.bib~
+.gitignore~
 
 ## Intermediate documents:
 *.dvi
