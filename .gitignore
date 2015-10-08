@@ -10,6 +10,7 @@
 *.cls~
 *.bib~
 .gitignore~
+.$references.bib$
 
 ## Intermediate documents:
 *.dvi
