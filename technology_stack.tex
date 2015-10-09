@@ -31,7 +31,7 @@
 	    \centering
 	    \includegraphics[width=0.7\textwidth]{mvcpattern.png}
 	    \caption{Αρχιτεκτονική MVC.}
-	    \label{fig:gamification_components}
+	    \label{fig:mvc_pattern}
 	\end{figure}
 		
 		
@@ -50,7 +50,7 @@
 	
 		\subsubsection{Express Framework}
 
-		Το Express.js είναι ένα framework του Node.js, σχεδιασμένο για να χτίζει μίας σελίδας, πολλών σελίδων, και hybric web εφαρμογές. Είναι το προκαθορισμένο framework που χρησιμοποιείται πάνω στο node.js.  Ο δημιουργός του TJ Holowaychuck το περιέγραψε ως ένα "Sinatra inspired server", πράγμα που σημαίνει ότι είναι σχετικά ελάχιστο, με πολλά χαρακτηριστικά διαθέσιμα ως πρόσθετα. Το express είναι το backend της στοίβας MEAN.
+		Το Express.js είναι ένα framework του Node.js, σχεδιασμένο για να χτίζει μίας σελίδας, πολλών σελίδων, και hybrid web εφαρμογές. Είναι το προκαθορισμένο framework που χρησιμοποιείται πάνω στο node.js.  Ο δημιουργός του TJ Holowaychuck το περιέγραψε ως ένα "Sinatra inspired server", πράγμα που σημαίνει ότι είναι σχετικά ελάχιστο, με πολλά χαρακτηριστικά διαθέσιμα ως πρόσθετα. Το express είναι το backend της στοίβας MEAN.
 		
 		\subsubsection{Angular}
 		Το AngularJS είναι ένα από τα πιο δημοφιλή ανοιχτού κώδικα JavaScript framework που χρησιμοποιείται για την κατασκευή και τη δομή σύγχρονων διαδικτυακών εφαρμογών, κυρίως εφαρμογών μίας σελίδας. Αναπτύχθηκε από την Google και από μία κοινότητα προγραμματιστών για την αντιμετώπιση των πολλών προκλήσεων που ανέκυψαν κατά την ανάπτυξη των εφαρμογών μίας σελίδας.  Στόχος του είναι να απλοποιήσει τόσο την ανάπτυξη όσο και το testing αυτών των εφαρμογών, παρέχοντας ένα framework για client-side model-View-Controller (MVC) και το model-view-viewmodel (MVVM) αρχιτεκτονικές, μαζί με τα συστατικά που χρησιμοποιούνται συνήθως στις εφαρμογές Διαδικτύου.
@@ -70,23 +70,16 @@
 	\item Two Way Data-binding. Αυτό πρακτικά σημαίνει ότι όταν αλλάζει το model αλλάζει και το view, και όταν αλλάζει το  view αλλάζει και το model.  Το Two Way Data-binding εξηγείται καλύτερα με ένα παράδειγμα: 
 	
 	
-	\begin{verbatim}
-	<input type="text" ng-model="myName">
-	<h1>Hello {{myName}}!</h1>
-	\end{verbatim}
+	\lstinputlisting[language=Html]{two_way_data_binding.html}
 
 	Αν ο χρήστης αλλάζει κάποια τιμή του model μέσω εισόδου στο view, τότε το AngularJs αποθηκεύει την τιμή
 αυτή σε μια μεταβλητή. Το στοιχείο h1 στην συνέχεια ενημερώνεται αυτόματα ώστε να αντικατοπτρίζονται οι αλλαγές στην τιμή της μεταβλητής του model. Το view ενημερώνεται ακόμα και αν η μεταβλητή αλλάξει χειροκίνητα με χρήση JavaScript.\cite{angular}
 
 	\item  HTML Templates. Ενώ άλλα JavaScript frameworks χρησιμοποιούν ένα template system που βασίζεται στην HTML με ειδική σήμανση το οποίο μπορεί να είναι δυσκολεύει τους προγραμματιστές, το AngularJS δεν στηρίζεται σε εξωτερικές template engines αλλά χρησιμοποιεί ένα templating σύστημα, που είναι χτισμένη πάνω στην HTML με έξυπνη χρήση των ng- χαρακτηριστικών. Το πρόγραμμα περιήγησης διαβάζει την HTML και "ψάχνει"  ng - directives τα οποία, όταν εκτελεστεί, δεσμεύουν το view στο model.
 
-    \item Dependency Injection. Το dependency injection ενθαρρύνεται πολύ από το AngularJS και είναι ένα από τα συστατικά του που βελτιώνει σε μεγάλο βαθμό το testability του. Το dependency injection είναι όταν έχεις μία συνάρτηση η οποία παίρνει μία παράμετρο, όπως το ακόλουθο παράδειγμα:
+    \item Dependency Injection. Το dependency injection ενθαρρύνεται πολύ από το AngularJS και είναι ένα από τα συστατικά του, που βελτιώνει σε μεγάλο βαθμό το testability του. Το dependency injection είναι όταν έχεις μία συνάρτηση η οποία παίρνει μία παράμετρο, όπως το ακόλουθο παράδειγμα:
     	
-	\begin{verbatim}
-	addThing = function(thing){
-	 $scope.add(thing);
-	}
-	\end{verbatim}
+	\lstinputlisting[language=JavaScript]{angular_dependency_injection.js}
 
 Το παραπάνω παράδειγμα είναι εύκολο να το τεστάρουμε, επειδή το στοιχείο που εισάγεται στην συνάρτηση μπορεί να είναι είτε ένα πραγματικό αντικείμενο ή ένα αντικειμένο για τους σκοπούς των τεστ. Ο διαχωρισμός σε μικρότερα πιο εύκολα ελέγξιμα συστατικά μπορεί να βοηθήσει πολύ στην ανίχνευση των σφαλμάτων.
 
@@ -96,37 +89,11 @@
 \\*
 \textbf{HTML:}
 
-	\begin{verbatim}
-	 <div contentEditable="true" ng-model="content">Edit Me</div>
- 	<pre>{{content}}</pre>
-	\end{verbatim}
+	\lstinputlisting[language=Html]{angular_directives.html}
  
 \textbf{JavaScript:}
 
-	\begin{verbatim}
-	angular.module('directive', []).directive('contenteditable', function()
-	{
- 	return {
- 	require: 'ngModel',
-	link: function(scope, elm, attrs, ctrl) {
-	// view -> model
- 	elm.bind('blur', function() {
-	scope.$apply(function() {
-	ctrl.$setViewValue(elm.html());
- 	});
-	});
-
-	// model -> view
-	ctrl.$render = function(value) {
- 	elm.html(value);
- 	};
- 
-	// load init value from DOM
- 	ctrl.$setViewValue(elm.html());
- 	}
- 	};
-	});
-	\end{verbatim}
+	\lstinputlisting[language=JavaScript]{angular_directives.js}
 
 
 	\item \$http service. Το AngularJS είναι εξαιρετικά ευέλικτο στον τρόπο που επικοινωνεί με τα διαφορετικά backends. Αντί να βασίζεται αποκλειστικά στο REST interface, επικοινωνεί ελεύθερα μέσω των XMLHttpRequests του προγράμματος περιήγησης ή μέσω του JSONP. Παρόλο που το \$ http service προσθέτει http headers ως προεπιλογή στα αιτήματα του,  είναι εύκολα διαμορφώσιμα μέσω του \$httpProvider.defaults.headers.
