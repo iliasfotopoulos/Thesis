@@ -1,4 +1,5 @@
 \graphicspath{ {Figures/implementation/} }
+
 \chapter{Υλοποίηση}\label{ch:Implementation}
 
 
@@ -12,19 +13,418 @@
 
 
 \section{Web App}
-	-Sign Up	
-	-Sign In
-	-diaxeirisi appointment
-	-create new event
-	-forma pou vlepeis ola ta donation events
-	-forma pou blepeis olous tpu xristes gia 1 donation event
-	- psigeio me diathesima kai katanalwmena
-	-forma oloklirwsis aitisis me elegxo eligibility
-	-
-	-
+	\subsection{NodeJs - Server Establishment}
+	
+	Όπως αναφέρθηκε και στην ενότητα (...) χρησιμοποιήσαμε την πλατφόρμα NodeJs για να αναπτύξουμε την εφαρμογή μας. Για να δουλέψουμε πάνω στο NodeJS χρησιμοποιούμε το το Express framework, εγκαθιστώντας το πακέτο express από τον Node Package Manager (NPM) και συνέχεια ενσωματώνουμε το πακέτο express. 
+	
+		\begin{lstlisting}[language=Javascript]	
+	  		var express = require('express');
+		\end{lstlisting}
+		
+		
+	Αφού έχουμε εξάγει και ενσωματώσει το πακέτο express δημιουργούμε ένα νέο express αντικείμενο.	
+		
+		
+		\begin{lstlisting}[language=Javascript]	
+			var app = express(); 	
+ 		\end{lstlisting}
+		
+			Το αντικείμενο "app" που έχουμε φτιάξει ουσιαστικά ξεκινάει τον server μας και εμπεριέχει μεθόδους για 
+			\begin{itemize}
+			\item Να δρομολογεί HTTP αιτήσεις.
+			\item Να ρυθμίζει το middleware.
+			\item Να προβάλει ένα view.
+			\item Να αρχικοποιεί και να χρησιμοποιεί μία μηχανή δημιουργίας προτύπων.
+			\end{itemize}
+				
+		\subsection{Routing}
+	
+		Η δρομολόγηση αναφέρεται στον ορισμό των τελικών σημείων (URIs) σε μια εφαρμογή και πώς αυτή ανταποκρίνεται στα αιτήματα του πελάτη. Μια διαδρομή είναι ένας συνδυασμός ενός URI, μια μέθοδος αίτησης HTTP (GET, POST, κ.π.λ.), και έναν ή περισσότερους χειριστές για αυτό το τελικό σημείο. 
+		Στην υλοποίηση μας χρησιμοποιήσαμε ένα ξεχωριστό αρχείο για δρομολόγηση (routing) στο οποίο "ενώνεται" μία middleware συνάρτηση με κάθε μονοπάτι που χρησιμοποιεί η εφαρμογή μας. Δημιουργήσαμε ένα αντικείμενο Router που παρέχει το express framework, το οποίο εκτελεί μόνο middleware και routing συναρτήσεις. Στο αρχείο αυτό γράψαμε τον απαραίτητο κώδικα για τις δρομολογήσεις. Ακολουθεί παράδειγμα από τον κώδικα δρομολόγησης.
 
+		\begin{lstlisting}[language=Javascript]			
+		
+		var express = require('express');
+		var router = express.Router(); 
+
+		var login = require('../controllers/LoginController');
+
+
+		router.get('/',login.loginForm); 
+		router.post('/login',login.loginAttempt);
+	
+	
+	 		\end{lstlisting}
+	 		
+	\subsection*{Μηχανή δημιουργίας προτύπων - Μοντέλο εφαρμογής }
+
+		Έχουμε υλοποιήσει μοντέλο Model View Controller (MVC). Αυτό πρακτικά σημαίνει ότι έχουμε χωρίσει την εφαρμογή μας σε τρεις διαφορετικούς φακέλους  ./Views, ./Models, ./Controllers . Κάθε οθόνη έχει το αντίστοιχο view και κάθε view ελέγχεται από τον αντίστοιχο controller.  
+		Η εφαρμογή μας χρησιμοποιεί την μηχανή δημιουργίας προτύπων Jade Template Engine. Ακολουθεί ο κώδικας αρχικοποίησης της Jade.
+		
+		\begin{lstlisting}[language=Javascript]			
+		
+		app.set('views', path.join(__dirname, 'views'));
+		app.set('view engine', 'jade');
+	
+		\end{lstlisting}
+		
+	Η μηχανή προτύπων Jade μας παρέχει την εξής λειτουργικότητα την οποία και αξιοποιήσαμε: Το Jade δίνει την δυνατότητα να δημιουργηθεί ένα βασικό View και στην συνέχεια κάνοντας το extend και συμπληρώνοντας κώδικα μόνο για τα  επιπλέον τμήματα που θέλουμε να εμφανίσουμε - υλοποιήσουμε να αναπτυχθούν τα υπόλοιπα Views. Αυτό είχε ως αποτέλεσμα να αποφύγουμε την επαναληψιμότητα του κώδικα, να έχουμε καλύτερη δομή και οργάνωση και λιγότερο χρόνο ανάπτυξης της εφαρμογής. Οι οθόνες μας χρησιμοποιούν NavigationBar. Δημιουργήσαμε ένα βασικό NavigationBarView, το οποίο παρατίθεται στην συνέχεια και κάνοντας το extend αναπτύξαμε τις υπόλοιπες οθόνες.
+	
+	\begin{lstlisting}[language=Javascript]			
+	
+	doctype html
+  html(lang='en')
+    head
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible', content='IE=edge')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        meta(name='description', content='')
+        meta(name='author', content='')
+        link(href = "/stylesheets/bootstrap.min.css", rel = "stylesheet")
+        script(src='http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js')
+        link(href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css",rel="stylesheet")
+        link(href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css",rel="stylesheet",type="text/css")
+        // IE10 viewport hack for Surface/desktop Windows 8 bug
+        script(src='//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js')
+        script(src="/javascripts/bootstrap.js")
+        script(src='//www.parsecdn.com/js/parse-1.5.0.min.js')
+        script(src='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js')
+
+    body
+        .navbar.navbar-default.navbar-fixed-top(role='navigation')
+            .container
+                .navbar-header
+                    button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-collapse')
+                        span.sr-only Toggle navigation
+                        span.icon-bar
+                        span.icon-bar
+                        span.icon-bar
+                    a.navbar-brand(href='#') LifeDonor
+                .navbar-collapse.collapse
+                    #re.ul.nav.navbar-nav
+                        li
+                            a(href='homepage') Donation Events
+                        li
+                            a(href='donationrequests') Donation Requests
+                        li
+                            a(href='create') Create a New Donation Event
+                        li
+                            a(href='create') Complete a Donation
+                         li
+                            a(href='create') View Blood Supplies
+                         li
+                            a(href='create') Appointment Management
+                            
+						                                                 
+                        li.dropdown
+                            a.dropdown-toggle(href='#', data-toggle='dropdown')
+                                | Dropdown
+                                span.caret
+                            ul.dropdown-menu(role='menu')
+                                li
+                                    a(href='#') Profile Management
+                                li
+                                    a(href='#') Volunteer Informations
+
+                                li.divider
+                                li.dropdown-header Nav header
+                                li
+                                    a(href='#') View Statistics
+
+                    ul.nav.navbar-nav.navbar-right
+                        li
+                            a(href='../navbar/') Default
+                        li
+                            a(href='../navbar-static-top/') Static top
+                        li.active
+                            a(href='./') Fixed top
+                // /.nav-collapse
+        .container
+            .jumbotron
+                block content
+
+		\end{lstlisting}
+
+		
+	\subsection{Οθόνες}
+	
+		Για τις ανάγκες λειτουργίας του συστήματος, μελετήθηκαν προσεκτικά και αξιολογήθηκαν οι αναγκαίες βασικές καρτέλες και τα μενού τα οποία κατ 'ελάχιστον θα πρέπει να διαθέτει το σύστημα ώστε να καλύπτει τις ανάγκες λειτουργίας του σε φορείς παροχής υπηρεσιών υγείας. Το σύστημα λοιπόν προτείνεται να απαρτίζεται από τις παρακάτω βασικές καρτέλες και μενού:
+
+		Στην συνέχεια παρουσιάζονται ενδεικτικά οι βασικές οθόνες λειτουργίας που διαθέτει το σύστημα μας για να καλύπτει τις λειτουργικές απαιτήσεις που αναφέρθηκαν στην ενότητα .... . Παρακάτω θα μελετήσουμε κάποιες ενδεικτικές οθόνες καθώς και τις λειτουργικότητες που παρέχουν, της διαδικτυακής εφαρμογής του υπολογιστικού νέφους από την πλευρά των εγκεκριμένων χρηστών/διαχειριστών των νοσοκομείων - κέντρων αιμοδοσίας. 
+	
+		\subsubsection{Register}
+		
+		Η οθόνη Register υλοποιείται με ένα View (RegisterView) και έναν Controller(RegisterController). Για την εμφάνιση του  RegisterView χρησιμοποιείται ένα κατάλληλα προσαρμοσμένο css βασισμένο στο bootstrap framework. Αρχικά εμφανίζεται μία λίστα από όλα τα νοσοκομεία και τα κέντρα αιμοδοσίας, τα οποία κατά την φόρτωση της φόρμας ανακτώνται από την βάση δεδομένων. O RegisterViewController είναι ο χειριστής της όλης διαδικασίας. Μόλις λάβουμε ένα αίτημα GET :
+		
+		\begin{lstlisting}[language=Javascript]			
+		
+		var register = require('../controllers/RegisterController');
+		
+		router.get('/register',register.registerForm);  
+
+
+		\end{lstlisting}
+		
+
+μεταβαίνουμε στον RegisterController ο οποίος χειρίζεται το αίτημα. Με την κλήση κατάλληλης συνάρτησης της αντίστοιχης κλάσης του μοντέλου, λαμβάνει τα δεδομένα και στην συνέχεια καλεί το RegisterView , περνώντας τα ζητούμενα δεδομένα σαν όρισμα.
+
+
+
+		\begin{lstlisting}[language=Javascript]			
+		
+	            res.render('RegisterView', { 
+                title: 'Register',
+                data: results,
+                results: resultsVol2
+				})
+				
+		\end{lstlisting}
+
+
+	Για την παρουσίαση των δεδομένων στην λίστα καθώς και την επιστροφή της επιλογής του χρήστη χρησιμοποιήθηκε το framework AngularJS. Έπειτα θα πρέπει να συμπληρωθεί μία φόρμα με τα στοιχεία τού διαχειριστή του νοσοκομείου που εκπροσωπείται. Αυτά αφορούν στο όνομα, στο επώνυμο, στον αριθμό αστυνομικής ταυτότητας ή διαβατηρίου, στο σταθερό τηλέφωνο, στο κινητό τηλέφωνο και στο e-mail. Ο χρήστης δημιουργεί τα αναγνωριστικά εισόδου (όνομα χρήστη και κωδικό πρόσβασης) και επιλέγει εγγραφή.  Τα στοιχεία που εισήγαγε ο χρήστης επιστρέφονται στον RegisterController, οπού καλείται η κατάλληλη συνάρτηση της αντίστοιχης κλάσης του μοντέλου για να εισαχθούν στην βάση δεδομένων.
+	
+	
+		\subsubsection{Login}
+		
+	Η οθόνη σύνδεσης του χρήστη στο σύστημα υλοποιείται με ένα View (LoginView) και έναν Controller(LoginController).  O LoginViewController είναι ο χειριστής της όλης διαδικασίας. Μόλις λάβουμε ένα αίτημα GET :
+		
+		\begin{lstlisting}[language=Javascript]			
+		
+		var login = require('../controllers/LoginController');
+		
+		router.get('/login',login.loginForm);  
+
+
+		\end{lstlisting}
+		
+
+μεταβαίνουμε στον LoginController ο οποίος χειρίζεται το αίτημα. Ο LoginController καλεί το LoginView:
+
+
+
+		\begin{lstlisting}[language=Javascript]			
+		
+              res.render('LoginView', {
+                    title: 'Welcome to DonorLife Login Page'
+                })
+
+
+		\end{lstlisting}
+
+		Ο χρήστης καλείται να συμπληρώσει το όνομα χρήστη και τον κωδικό πρόσβασης με τα οποία είναι εγγεγραμμένος στο σύστημα. Ο LoginController λαμβάνει  τα στοιχεία και καλεί το authentication service. Αν επιτευχθεί  η  ταυτοποίηση των στοιχείων, μεταβαίνουμε στην αρχική σελίδα αλλιώς εμφανίζεται μήνυμα λάθους και ο χρήστης καλείται να ξαναπροσπαθήσει. Επίσης αξίζει να σημειωθεί ότι στην παρούσα οθόνη δίνεται η δυνατότητα επαναφοράς κωδικού.
+		
+		
+				\subsubsection{Home Page - Donation Events}
+		
+	Η οθόνη αυτή υλοποιείται με ένα View (HomePageView) και έναν Controller(HomePageController).  O HomePageController είναι ο χειριστής της όλης διαδικασίας. Κατά την φόρτωση της σελίδας εμφανίζονται όλα τα γεγονότα αιμοδοσίας του νοσοκομείου. Στο πάνω μέρος εμφανίζεται η λίστα με όλες τις ενεργές αιμοδοσίες και από κάτω εμφανίζεται μία λίστα με το ιστορικό όλων των αιμοδοσιών που έχουν γίνει στο συγκεκριμένο ιατρικό κέντρο. Μόλις λάβουμε ένα αίτημα GET :
+		
+		\begin{lstlisting}[language=Javascript]			
+		
+		var homepage = require('../controllers/HomePageController');
+		
+		router.get('/homepage',homepage.homePageForm);  
+
+
+		\end{lstlisting}
+		
+μεταβαίνουμε στον RegisterController ο οποίος χειρίζεται το αίτημα. Με την κλήση κατάλληλης συνάρτησης της αντίστοιχης κλάσης του μοντέλου, λαμβάνει τα δεδομένα,  και στην συνέχεια καλεί το HomePageView , περνώντας τα ζητούμενα δεδομένα σαν όρισμα.
+
+
+
+		\begin{lstlisting}[language=Javascript]			
+		
+	            res.render('HomePageView', { 
+                title: 'Donation Events',
+                dataNow: results,
+                dataExpired: resultsVol2
+                })
+
+		\end{lstlisting}
+		
+		Σε κάθε event υπάρχουν αναλυτικά οι πληροφορίες του, καθώς και:
+		
+		\begin{itemize}
+		\item ένα button με την επιλογή "Επεξεργασία" το οποίο μας οδηγεί σε νέο παράθυρο στο οποίο γίνονται edit τα στοιχεία του γεγονότος αιμοδοσίας
+		
+		\item ένα button με την επιλογή "Αναλυτική Προβολή" μέσω του οποίου μεταβαίνουμε σε νέα σελίδα στην οποία βλέπουμε αναλυτικά ποιοι αιμοδότες έχουν δώσει αίμα και ποιοι έχουν κλείσει ραντεβού για να δώσουν.
+		
+		\item μία γραφική απεικόνιση του ποσοστού του αίματος που έχει δοθεί σε σχέση με το ζητούμενο (αν υπάρχει κάποια απαίτηση).
+		
+		\end{itemize}
+		
+
+		
+				\subsubsection{Requests}
+		
+	Η οθόνη αυτή υλοποιείται με ένα View (RequestsView) και έναν Controller(RequestsController). O RequestsController είναι ο χειριστής της όλης διαδικασίας. Μόλις λάβουμε ένα αίτημα GET :
+		
+		\begin{lstlisting}[language=Javascript]			
+		
+		var requests = require('../controllers/RequestsController');
+		
+		router.get('/requests',requests.RequestsForm);  
+
+
+		\end{lstlisting}
+		
+μεταβαίνουμε στον RequestsController ο οποίος χειρίζεται το αίτημα. Με την κλήση κατάλληλης συνάρτησης της αντίστοιχης κλάσης του μοντέλου, λαμβάνει τα δεδομένα,  και στην συνέχεια καλεί το RequestsView , περνώντας τα ζητούμενα δεδομένα σαν όρισμα.
+
+
+
+		\begin{lstlisting}[language=Javascript]			
+		
+	            res.render('RequestsView', { 
+                title: 'Donation Requests',
+                dataGiven: results,
+                dataAppoint: resultsVol2
+                })
+                
+		\end{lstlisting}
+		
+		Σε κάθε event υπάρχουν αναλυτικά οι πληροφορίες του, καθώς και:
+		
+		\begin{itemize}
+		\item ένα button με την επιλογή "Επεξεργασία" το οποίο μας οδηγεί σε νέο παράθυρο στο οποίο γίνονται edit τα στοιχεία του γεγονότος αιμοδοσίας
+		
+		\item ένα button με την επιλογή "Αναλυτική Προβολή" μέσω του οποίου μεταβαίνουμε σε νέα σελίδα στην οποία βλέπουμε αναλυτικά ποιοι αιμοδότες έχουν δώσει αίμα και ποιοι έχουν κλείσει ραντεβού για να δώσουν.
+		
+		\item μία γραφική απεικόνιση του ποσοστού του αίματος που έχει δοθεί σε σχέση με το ζητούμενο (αν υπάρχει κάποια συγκεκριμένη απαίτηση αίματος).
+		
+		\end{itemize}
+
+
+	
+	
+				\subsubsection{Donation Completion}
+		
+	Η οθόνη αυτή υλοποιείται με ένα View (CompletionView) και έναν Controller(CompletionController). O CompletionController είναι ο χειριστής της όλης διαδικασίας. Κατά την φόρτωση της σελίδας εμφανίζονται όλοι οι χρήστες οι οποίοι έχουν δώσει αίμα ή έχουν κλείσει ραντεβού για να δώσουν αίμα στο συγκεκριμένο γεγονός αιμοδοσίας. Στο πάνω μέρος εμφανίζεται η λίστα με τους εθελοντές που έχουν κλείσει ραντεβού να δώσουν αίμα και από κάτω εμφανίζεται μία λίστα με τα στοιχεία των εθελοντών που έχουν πραγματοποιήσει ήδη αιμοδοσία. Μόλις λάβουμε ένα αίτημα GET :
+		
+		\begin{lstlisting}[language=Javascript]			
+		
+		var completion = require('../controllers/CompletionController');
+		router.get('/completion',completion.CompletionForm);  
+
+
+		\end{lstlisting}
+		
+μεταβαίνουμε στον CompletionController ο οποίος χειρίζεται το αίτημα. Με κλήση του CompletionView:
+
+
+		\begin{lstlisting}[language=Javascript]			
+
+			   res.render('CompletionView', { 
+                title: 'Complete a donation',
+				})
+				
+		\end{lstlisting}
+		
+		Ο χρήστης καλείται να συμπληρώσει το ΑΜΚΑ του εθελοντή και να κάνει έλεγχο καταλληλότητας. Το σύστημα ξεκινάει να τρέχει το Eligibility as a Service, και επιστρέφει απάντηση ναι η όχι. Ο RequestsController ανάλογα με την απάντηση ενεργοποιεί ή όχι την δυνατότητα να ολοκληρωθεί αιμοδοσία από τον συγκεκριμένο εθελοντή. 
+		
+		
+		
+		\subsubsection{Create a New Donation Event}
+		
+		Η οθόνη Create a New Donation Event υλοποιείται με ένα View (CreateDonationView) και έναν Controller(CreateDonationController).Μόλις λάβουμε ένα αίτημα GET :
+		
+		\begin{lstlisting}[language=Javascript]			
+		
+		var createDonation = require('../controllers/CreateDonationController');
+		
+		router.get('/createDonation',createDonation.CreateDonationForm);  
+
+
+		\end{lstlisting}
+		
+
+μεταβαίνουμε στον CreateDonationController ο οποίος χειρίζεται το αίτημα. O CreateDonationController καλεί το CreateDonationView:
+
+
+
+		\begin{lstlisting}[language=Javascript]			
+		
+	            res.render('CreateDonationView', { 
+                title: 'Create a New Donation',
+			})
+				
+		\end{lstlisting}
+
+
+	Στην συνέχεια θα πρέπει να συμπληρωθεί μία φόρμα με τα στοιχεία του γεγονότος αιμοδοσίας. Αυτά αφορούν στην ονομασία της, στην ποσότητα αίματος, στις συγκεκριμένες απαιτήσεις αν υπάρχουν (π.χ. συγκεκριμένη ομάδα αίματος ), στο χρονικό διάστημα διεξαγωγής της αιμοδοσίας και στα διαθέσιμα ραντεβού. Τα στοιχεία που εισήγαγε ο χρήστης επιστρέφονται στον CreateDonationController, οπού καλείται η κατάλληλη συνάρτηση της αντίστοιχης κλάσης του μοντέλου για να εισαχθούν στην βάση δεδομένων. Στην συνέχεια τρέχει το Notification as a Service, το οποίο στέλνει τα κατάλληλα push notifications στους εθελοντες αιμοδότες.
+		
+		
+		
+		
+						\subsubsection{Appointment Management}
+		
+	Η οθόνη αυτή υλοποιείται με ένα View (AppointmentView) και έναν Controller(AppointmentController). Κατά την φόρτωση της σελίδας εμφανίζονται όλα τα ραντεβού αιμοδοσίας του νοσοκομείου. O AppointmentController είναι ο χειριστής της όλης διαδικασίας. Μόλις λάβουμε ένα αίτημα GET :
+		
+		\begin{lstlisting}[language=Javascript]			
+		
+		var appointment = require('../controllers/AppointmentController');
+		
+		router.get('/appointment',appointment.AppointmentForm);  
+
+
+		\end{lstlisting}
+		
+μεταβαίνουμε στον AppointmentController ο οποίος χειρίζεται το αίτημα. Με την κλήση κατάλληλης συνάρτησης της αντίστοιχης κλάσης του μοντέλου, λαμβάνει τα δεδομένα,  και στην συνέχεια καλεί το AppointmentView , περνώντας τα ζητούμενα δεδομένα σαν όρισμα.
+
+
+
+		\begin{lstlisting}[language=Javascript]			
+		
+	            res.render('AppointmentView', { 
+                title: 'Appointment Management',
+                data: results,
+				})
+
+		\end{lstlisting}
+		
+		Ο χρήστης μπορεί να επιλέξει ένα ραντεβού και να δει αναλυτικά περαιτέρω πληροφορίες, όπως το γεγονός της αιμοδοσίας και  τα στοιχεία του εθελοντή αιμοδότη καθώς και:
+		
+		\begin{itemize}
+		\item Έχει την επιλογή 'Ακύρωση', με την οποία ακυρώνει το ραντεβού, εισάγοντας την αιτιολογία για αυτή την ενέργεια ή οποία κοινοποιείται και στον εθελοντή αιμοδότη.
+		
+		\item Έχει την επιλογή 'Μετάθεση' με την οποία μεταθέτει χρονικά ένα ραντεβού, η οποία ολοκληρώνεται ύστερα από συναίνεση του εθελοντή αιμοδότη.		
+		\end{itemize}
+
+		
+
+		\subsubsection{Supplies Management}
+		
+	Η οθόνη αυτή υλοποιείται με ένα View (SuppliesView) και έναν Controller(SuppliesController). Κατά την φόρτωση της σελίδας εμφανίζεται ένας πίνακας ο οποίος περιέχει τις βασικές κατηγορίες των παραγώγων του αίματος (ΣΕ, Αιμοπετάλια(κοινά), Αιμοπετάλια, FFP, Κοινό πλάσμα) και την ποσότητα που υπάρχει διαθέσιμη για την κάθε κατηγορία σε κάθε ομάδα αίματος (0+, 0-, ΑΒ+, ΑΒ-,Α+,Α-,Β+,Β-). O SuppliesController είναι ο χειριστής της όλης διαδικασίας. Μόλις λάβουμε ένα αίτημα GET :
+		
+		\begin{lstlisting}[language=Javascript]			
+		
+		var supplies = require('../controllers/SuppliesController');
+		
+		router.get('/supplies',cupplies.SuppliesForm);  
+
+
+		\end{lstlisting}
+		
+μεταβαίνουμε στον SuppliesController ο οποίος χειρίζεται το αίτημα. Με την κλήση κατάλληλης συνάρτησης της αντίστοιχης κλάσης του μοντέλου, λαμβάνει τα δεδομένα των διαθέσιμων ποσοτήτων,  και στην συνέχεια καλεί το SuppliesView , περνώντας τα ζητούμενα δεδομένα σαν όρισμα.
+
+
+
+		\begin{lstlisting}[language=Javascript]			
+		
+	            res.render('SuppliesView', { 
+                title: 'Supplies Management',
+                data: results,
+				})
+
+		\end{lstlisting}
+	
 
 \section{Mobile App}
+	
+   		\subsubsection{Sign }
+
+
+
+
+
 
 	- Sign In
 	 -Sign Up
@@ -55,6 +455,7 @@
 %	\subsection{Activities}
 %	\subsection{Screenshots}
 %	\subsection{Social Networking Integration}
+
 	\subsection{Testing and Tools}
 	Στο παρόν κεφάλαιο θα αναφερθούμε αρχικά στο περιβάλλον ελέγχου που μας παρέχει το Android καθώς και στους διαφορετικού τύπους ελέγχου που μπορούμε να εκτελέσουμε. Στην συνέχεια θα αναφερθούμε στους ελέγχους που πραγματοποιήσαμε καθώς και στα αποτελέσματα τους.
 	
@@ -85,6 +486,7 @@
 		Τα instrumentation tests δεν γίνεται να τρέξουν στο JVM αλλά χρειάζονται περιβάλλον με λειτουργικό σύστημα Android. Μπορούν να τρέξουν είτε σε πραγματική συσκευή Android η οποία έχει συνδεθεί με τον υπολογιστή στον οποίο γίνεται η ανάπτυξη, είτε σε εικονική συσκευή Android. Δεδομένου του πλήθους των συσκευών που τρέχουν το λειτουργικό σύστημα Android, και συνυπολογίζοντας τις διάφορες εκδόσεις που μπορεί να τρέχει κάθε συσκευή, κάθε δοκιμή θα πρέπει να γίνεται με χρήση εξομοίωσης σε διάφορα επίπεδα API αλλά και μεγέθη οθονών. Για παράδειγμα αν η εφαρμογή υποστηρίζει επίπεδο API μεγαλύτερο του 14 θα πρέπει να γίνει έλεγχος για κάθε API μεγαλύτερο του 14 με τουλάχιστον 2 διαφορετικά μεγέθη οθόνης για κάθε API. 
 		
 		Όπως γίνεται εμφανές από τα παραπάνω το τρέξιμο των instrumentation tests αποτελεί μια ιδιαίτερα χρονοβόρα διαδικασία. Για την εξομάλυνση αυτού του προβλήματος υπάρχουν υπηρεσίες μέσω των οποίων οι δοκιμές μπορούν να γίνουν στο υπολογιστικό νέφος. Παρακάτω βλέπουμε ένα παράδειγμα δοκιμών instrumentation που φτιάξαμε για να ελέγξουμε την λειτουργία επαναφοράς κωδικού.
+		
 		\lstinputlisting[language=Java]{ResetPassword.java}
 		\subsubsection{Performance Testing}
 		\subsubsection{Android API Level compatibility testing}
