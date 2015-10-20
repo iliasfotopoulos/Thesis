@@ -1,0 +1,12 @@
+<component>
+	<section>
+	<code code="10164-2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>
+	<title>History of Present Illness</title>
+	<text>
+		Henry Levin, the 7th is a 67 year old male referred for further asthma management. Onset of asthma in his
+		<content revised="delete">twenties</content>
+		<content revised="insert">teens</content>
+		. He was hospitalized twice last year, and already twice this year. He has not been able to be weaned off steroids for the past several months.
+	</text>
+	</section>
+</component>

@@ -1,0 +1,16 @@
+<author>
+	<time value="20000407"/>
+	<assignedAuthor>
+		<id extension="KP00017" root="2.16.840.1.113883.3.933"/>
+		<assignedPerson>
+			<name>
+				<given>Robert</given>
+				<family>Dolin</family>
+				<suffix>MD</suffix>
+			</name>
+			</assignedPerson>
+		<representedOrganization>
+			<id extension="M345" root="2.16.840.1.113883.3.933"/>
+		</representedOrganization>
+	</assignedAuthor>
+</author>
