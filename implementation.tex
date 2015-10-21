@@ -418,11 +418,34 @@
 	
 
 \section{Mobile App}
+	Κατά την υλοποίηση της εφαρμογής για έξυπνα κινητά με λειτουργικό σύστημα android χρησιμοποιήθηκε το αρχιτεκτονικό πρότυπο MVP (βλ. \ref{sssect:MVP_architecture}). Κάθε Activity της εφαρμογής μας κληρονομεί από τη κλάση BaseActivity η οποία περιέχει τις βασικές κοινές λειτουργίες (για παράδειγμα εμφάνιση και απόκρυψη μπάρας φόρτωσης). Για να γίνει πιο εύκολα κατανοητή η αρχιτεκτονική της εφαρμογής μας, στο σχήμα \ref{fig:android_mvp_example_class_diagram} βλέπουμε ένα ενδεικτικό διάγραμμα κλάσεων.
 	
-   		\subsubsection{Sign }
-
-
-
+	\begin{figure}[h]
+	    \centering
+	    \includegraphics[width=1.1\textwidth]{android_mvp_example_class_diagram.png}
+	    \caption{Παράδειγμα διαγράμματος κλάσεων - MVP Android.}
+	    \label{fig:android_mvp_example_class_diagram}
+	\end{figure}
+	
+	Σε αυτό το σημείο πρέπει να σημειωθεί ότι για το dependency injection που φαίνεται στο σχήμα \ref{fig:android_mvp_example_class_diagram} έγινε χρήση του dependency injector dagger\cite{daggerAndroid}. 
+	
+   		\subsubsection{Σύνδεση στην εφαρμογή - Login}
+   		
+	\begin{figure}[h]
+	    \centering
+	    \includegraphics[width=0.6\textwidth]{LoginActivity.png}
+	    \caption{Οθόνη σύνδεσης χρήστη στο σύστημα - Android.}
+	    \label{fig:LoginActivity}
+	\end{figure}
+   		
+   		
+   		Η οθόνη σύνδεσης στο σύστημα υλοποιείται μέσω ενός LoginActivity και ενός LoginPresenter ο οποίος το συνοδεύει. Όπως δείξαμε και στο σχήμα \ref{fig:android_mvp_example_class_diagram}, το LoginPresenter γίνεται inject στο LoginActivity και το LoginView (το οποίο υλοποιείται από το LoginActivity) γίνεται inject στον LoginPresenter αντίστοιχα. Μόλις ο χρήστης συμπληρώσει τα στοιχεία του και κάνει tap στο κουμπί σύνδεσης, το LoginActivity ``περνάει" τα διαπιστευτήρια στον LoginPresenter ο οποίος αρχικώς τα ελέγχει προς ορθότητα. Σε περίπτωση προβλήματος ως προς την ορθότητα ο LoginPresenter λέει στο LoginActivity τι μήνυμα λάθους θα πρέπει να δείξει στον χρήστη. Σε περίπτωση που δεν υπάρχει πρόβλημα ορθότητας, επικοινωνεί με το μοντέλο για να κάνει ταυτοποίηση του χρήστη. Τέλος ο LoginPresenter ενημερώνει το LoginActivity το οποίο με την σειρά του ενημερώνει τον χρήστη με κατάλληλο μήνυμα. 
+   		
+   		Παρακάτω βλέπουμε ενδεικτικά την κλήση του Presenter από το Activity:
+   		\lstinputlisting[language=Java]{attempt_login.java}
+		
+		Παρακάτω βλέπουμε ενδεικτικά πως ο Presenter λέει στο Activity να δείξει μήνυμα λάθους:
+		\lstinputlisting[language=Java]{loginPresenter_error.java}
 
 
 
