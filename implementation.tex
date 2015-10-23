@@ -5,9 +5,9 @@
 \section{Αρχιτεκτονική του συστήματος}
 Για την υλοποίηση του προτεινόμενου συστήματος αιμοδοσίας, χρησιμοποιείται η διαδεδομένη αρχιτεκτονική πολλαπλών επιπέδων (multitier architecture) όπως απεικονίζεται στο σχήμα \ref{fig:architect_schema}.
 
-	\begin{figure}[h]
+	\begin{figure}[H]
 	    \centering
-	    \includegraphics[width=0.7\textwidth]{categories_of_android_tests.png}
+	    \includegraphics[width=1\textwidth]{architecture.png}
 	    \caption{ Σχηματικό διάγραμμα του συστήματος. }
 	    \label{fig:architect_schema}
 	\end{figure}
@@ -26,9 +26,9 @@
 	
 	Στην ενότητα αυτή παρουσιάζεται το σχεσιακό διάγραμμα της βάσης NoSQL για το προτεινόμενο σύστημα ενώ παράλληλα αποτυπώνονται συνοπτικά οι προτεινόμενες δομές δεδομένων που υλοποιούν το προτεινόμενο σχήμα δεδομένων. Στο σχήμα \ref{fig:database_diag} απεικονίζεται η βάση δεδομένων.
 	
-	\begin{figure}[h]
+	\begin{figure}[H]
 	    \centering
-	    \includegraphics[width=0.7\textwidth]{Class_Diagram.png}
+	    \includegraphics[width=1\textwidth]{Class_Diagram.png}
 	    \caption{Σχεσιακό διάγραμμα της βάσης του συστήματος.}
 	    \label{fig:database_diag}
 	\end{figure}
@@ -458,15 +458,7 @@
 	
    		\subsubsection{Σύνδεση στην εφαρμογή - Login}
    		
-	\begin{figure}[h]
-	    \centering
-	    \includegraphics[width=0.6\textwidth]{LoginActivity.png}
-	    \caption{Οθόνη σύνδεσης χρήστη στο σύστημα - Android.}
-	    \label{fig:LoginActivity}
-	\end{figure}
-   		
-   		
-   		Η οθόνη σύνδεσης στο σύστημα υλοποιείται μέσω ενός LoginActivity και ενός LoginPresenter ο οποίος το συνοδεύει. Όπως δείξαμε και στο σχήμα \ref{fig:android_mvp_example_class_diagram}, το LoginPresenter γίνεται inject στο LoginActivity και το LoginView (το οποίο υλοποιείται από το LoginActivity) γίνεται inject στον LoginPresenter αντίστοιχα. Μόλις ο χρήστης συμπληρώσει τα στοιχεία του και κάνει tap στο κουμπί σύνδεσης, το LoginActivity ``περνάει" τα διαπιστευτήρια στον LoginPresenter ο οποίος αρχικώς τα ελέγχει προς ορθότητα. Σε περίπτωση προβλήματος ως προς την ορθότητα ο LoginPresenter λέει στο LoginActivity τι μήνυμα λάθους θα πρέπει να δείξει στον χρήστη. Σε περίπτωση που δεν υπάρχει πρόβλημα ορθότητας, επικοινωνεί με το μοντέλο για να κάνει ταυτοποίηση του χρήστη. Τέλος ο LoginPresenter ενημερώνει το LoginActivity το οποίο με την σειρά του ενημερώνει τον χρήστη με κατάλληλο μήνυμα. 
+   		Η οθόνη σύνδεσης στο σύστημα υλοποιείται μέσω ενός LoginActivity και ενός LoginPresenter ο οποίος το συνοδεύει. Όπως δείξαμε και στο σχήμα \ref{fig:android_mvp_example_class_diagram}, ο LoginPresenter γίνεται inject στο LoginActivity και το LoginView (το οποίο υλοποιείται από το LoginActivity) γίνεται inject στον LoginPresenter αντίστοιχα. Μόλις ο χρήστης συμπληρώσει τα στοιχεία του και κάνει tap στο κουμπί σύνδεσης, το LoginActivity ``περνάει" τα διαπιστευτήρια στον LoginPresenter ο οποίος αρχικώς τα ελέγχει για να εξακριβώσει την ορθότητα τους. Σε περίπτωση προβλήματος ως προς την ορθότητα ο LoginPresenter λέει στο LoginActivity τι μήνυμα λάθους θα πρέπει να δείξει στον χρήστη. Σε περίπτωση που δεν υπάρχει πρόβλημα ορθότητας, επικοινωνεί με το μοντέλο για να κάνει ταυτοποίηση του χρήστη. Τέλος ο LoginPresenter ενημερώνει το LoginActivity το οποίο με την σειρά του ενημερώνει τον χρήστη με κατάλληλο μήνυμα. 
    		
    		Παρακάτω βλέπουμε ενδεικτικά την κλήση του Presenter από το Activity:
    		\lstinputlisting[language=Java]{attempt_login.java}
@@ -476,36 +468,113 @@
 
 
 
-	- Sign In
-	 -Sign Up
-	 -Create an Appointment
-	 -View History apo tis aimodosies tou
-	 -vlepei tis aimodosies genikotera (running, pending)
-	 -View badges - rewards
-	 -push notification
-	
+\subsection{Εγγραφή στην εφαρμογή - Sign Up}	
+
 		
 
-%\section{Back-End}
-%	\subsection{Parse}
-%	\subsection{NodeJS}
-%		
-%\section{Front-End Cloud App}
-%	\subsection{JS}
-%	\subsection{jQuery και AngularJS}
-%	\subsection{Screenshots}
-%	\subsection{Social Networking Integration}
-%	\subsection{Testing and Tools}
-%		\subsubsection{Unit Testing}
-%		\subsubsection{Infrastucture Testing}
-%		\subsubsection{Performance Testing}
-%		\subsubsection{Browser Compatibility Testing}
-%
-%\section{Android}
-%	\subsection{Activities}
-%	\subsection{Screenshots}
-%	\subsection{Social Networking Integration}
+   		Η οθόνη εγγραφής στο σύστημα υλοποιείται μέσω ενός RegisterActivity και ενός RegisterPresenter ο οποίος το συνοδεύει. Ο RegisterPresenter γίνεται inject στο RegisterActivity και το RegisterView (το οποίο υλοποιείται από το RegisterActivity) γίνεται inject στον RegisterPresenter αντίστοιχα. Μόλις ο χρήστης συμπληρώσει τα απαραιτητά για την εγγραφή του στοιχεία (ΑΜΚΑ) και κάνει tap στο κουμπί εγγραφής, το RegisterActivity καλεί τον RegisterPresenter ο οποίος αρχικώς τα ελέγχει για να εξακριβώσει την ορθότητα τους. Με βάση τα στοιχεία εγγραφής, ανοίγει ασφαλή δίαυλο επικοινωνίας με τη βάση δεδομένων της ΗΔΙΚΑ και "τραβάει" τα στοιχεία του χρήστη και στην συνέχεια επικοινωνεί με το κατάλληλο model, το οποίο θα περάσει τα στοιχεία στην βάση δεδομένων στο υπολογιστικό νέφος (cloud computing). Τέλος, ο RegisterPresenter λέει στο RegisterActivity να εμφανίσει το κατάλληλο μήνυμα στον χρήστη.
+   
+   		
+   		Παρακάτω βλέπουμε ενδεικτικά την κλήση του Presenter από το Activity:
+   			
+   			
+   				\begin{lstlisting}[language=Java]			
+		
+    @OnClick(R.id.register_button)
+    protected void attemptRegister()
+    {
+        resetErrors();
+        String AMKA = mAMKAlView.getText().toString().trim();
+        registerPresenter.registerUser(AMKA);
+    }
+    
+		\end{lstlisting}
+		
+		Παρακάτω βλέπουμε ενδεικτικά πως ο Presenter λέει στο Activity να δείξει ότι είχαμε επιτυχία:
+	
+	
+   	\begin{lstlisting}[language=Java]			
 
+	
+	public void onSuccess()
+    {
+        view.navigateToFirstSignUp();
+    }
+    
+    	\end{lstlisting}
+	
+	
+\subsection{Δημιουργία νέου ραντεβού}	
+
+	
+   		Η οθόνη δημιουργίας ενός νέου ραντεβού στο σύστημα υλοποιείται μέσω ενός CreateAppointmentActivity και ενός CreateAppointmentPresenter ο οποίος το συνοδεύει. Ο CreateAppointmentPresenter γίνεται inject στο CreateAppointmentActivity και το CreateAppointmentView (το οποίο υλοποιείται από το CreateAppointmentActivity) γίνεται inject στον CreateAppointmentPresenter αντίστοιχα. O χρήστης βλέπει τα διαθέσιμα ραντεβού για ένα συγκεκριμένο γεγονός αιμοδοσίας και κάνοντας tap στην ώρα και ημέρα που επιθυμεί, του εμφανίζεται ένα μήνυμα επιβεβαίωσης της κράτησης του ραντεβού μέσω dialog fragment στο οποίο επιβεβαιώνει ή απορρίπτει την κράτηση του ραντεβού. Τα στοιχεία του ραντεβού μεταφέρονται από τον CreateAppointmentActivity στον CreateAppointmentPresenter ο οποίος αναλαμβάνει την κατοχύρωση του ραντεβού στο αιμοδοτικό κέντρο. Τέλος, ο CreateAppointmentPresenter λέει στο CreateAppointmentActivity να εμφανίσει το κατάλληλο μήνυμα στον χρήστη.
+   
+   		
+   		Παρακάτω βλέπουμε ενδεικτικά την κλήση του Presenter από το Activity:
+   			
+   			
+   	\begin{lstlisting}[language=Java]			
+		
+    @OnClick(R.id.create_appointment_button)
+    protected void attemptCreateAppointment()
+    {
+        resetErrors();
+        Date date = formatter.parse( date.getText().toString().trim() );
+        Institution institution = Event.getInstitution();
+        createAppointmentPresenter.createAppointment(institution,date,event);
+    }
+    
+		\end{lstlisting}
+		
+\subsection{Εμφάνιση ιστορικού αιμοδοσιών}	
+
+   		Η οθόνη εμφάνισης του ιστορικού αιμοδοσίας υλοποιείται μέσω ενός DonationsHistoryActivity και ενός DonationsHistoryPresenter ο οποίος το συνοδεύει. O χρήστης βλέπει μια λίστα από τις αιμοδοσίες τις οποίες έχει συμμετάσχει και έχει τη δυνατότητα με tap να δει επιπλέον πληροφορίες. 
+   
+   		Παρακάτω βλέπουμε ενδεικτικά την κλήση του Presenter από το Activity καθώς και την συνάρτηση που καλείται όταν ο χρήστης κάνει tap σε κάποια αιμοδοσία:
+   			
+   			
+   	\begin{lstlisting}[language=Java]			
+        donationRequestsPresenter.fetchDonationRequests(status);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+            {
+                Log.d(TAG,"Donation Request tapped,let's see the details");
+                DonationRequest donationRequest = adapter.getItem(position);
+                openDonationRequestDetailView(donationRequest);
+            }
+        });
+		\end{lstlisting}
+	 	 
+	\subsection{Λήψη ειδοποίησης(push notification)}	
+
+		Ο χρήστης λαμβάνει την ειδοποίηση (push notification), την ανοίγει και ξεκινά το DonationRequestDetailsActivity. Παρακάτω βλέπουμε ενδεικτικά την συνάρτηση που παίρνει τα δεδομένα από το push notification για να τα εμφανίσει στο DonationRequestActivity:
+   			
+   			
+   	\begin{lstlisting}[language=Java]			
+		
+   public void updateView(final DonationRequest donationRequest)
+    {
+        if (donationRequest != null)
+        {
+            Event event = donationRequest.getEvent();
+            String fullAddress = event.getStreet() + " " +event.getStreetNo();
+            String fullBloodType = event.getBloodType() + event.getRhesus();
+            String fullQuantity = event.getQuantity() + "/" + event.getQuantityRequired();
+
+            venue.setText( event.getCity() );
+            date.setText(event.getDate());
+            address.setText(fullAddress);
+            bloodType.setText(fullBloodType);
+            quantity.setText(fullQuantity);
+        }
+    }
+		\end{lstlisting}
+	
+	
+		
 	\section{Testing and Tools}
 	
 	\subsection{Android Application Testing}
@@ -546,9 +615,28 @@
 		
 		\lstinputlisting[language=Java]{ResetPassword.java}
 		
-		\subsubsection{Performance Testing}
-		\subsubsection{Android API Level compatibility testing}
 		\subsection{NodeJs Testing}
+		
+	
+		Για τη συγγραφή και εκτέλεση τεστ για τον κώδικα σε JavaScript χρησιμοποιήσαμε τα εργαλεία Karma και Mocha.Το Mocha είναι μια βιβλιοθήκη που επιτρέπει τον ορισμό και την εκτέλεση δοκιμών σε ένα περιβάλλον Node.js χωρίς την ανάγκη ύπαρξης ενός φυλλομετρητή. Ορίζει περισσότερα από ένα στυλ συγγραφής τεστ και μας επιτρέπει να επιλέξουμε εκείνο που ταιριάζει περισσότερο στις ανάγκες του εκάστοτε τεστ. Στην περίπτωση που θέλουμε τα τεστ να εκτελούνται σε φυλλομετρητή το Mocha μας επιτρέπει να φορτώσουμε τα τεστ σε μία HTML σελίδα και να τα εκτελέσουμε στο φυλλομετρητή.
+
+
+		Το Chai είναι μία βιβλιοθήκη επικυρώσεων (assertion framework), η οποία συνεργάζεται άψογα με τη βιβλιοθήκη Mocha και δίνει τη δυνατότητα ορισμού των αναμενόμενων αποτελεσμάτων από κάποιο τεστ και ελέγχου κατά την εκτέλεσή του. Επίσης, όπως και το Mocha, μας επιτρέπει να διαλέξουμε από ένα σύνολο διαφορετικών στυλ για τον ορισμό των προσδοκιών. Παρατίθεται παράδειγμα τεστ γραμμένου με χρήση mocha και chai.
+		
+		   	\begin{lstlisting}[language=JavaScript]		
+		describe('JavaScript', function()){
+		it('should perform substraction properly', function() 
+		{
+	     expect(2 - 0).to.equal(2);
+		expect(5 - 2).to.equal(3); 
+		expect(7 - 3).not.to.equal(4);
+		}); 
+		});
+				\end{lstlisting}
+				
+￼
+￼
+		Τέλος, το Karma είναι ένα εργαλείο το οποίο ενώνει τις δυνατότητες των ανωτέρω βιβλιοθηκών σε μία σελίδα HTML, εκτελεί όλα τα τεστ και επιστρέφει τα αποτελέσματα από την εκτέλεσή τους. Το Karma, βασίζεται σε ένα αρχείο ρυθμίσεων με βάση το οποίο γνωρίζει ποιες βιβλιοθήκες να χρησιμοποιήσει, που να βρει τα τεστ, σε τι πρόγραμμα περιήγησης να τα εκτελέσει, πώς να δημοσιεύσει τα αποτελέσματα και ενδεχομένως επιπλέον πληροφορίες σχετικές με την εκτέλεση των τεστ. 
 		
 		\subsubsection{Browser Compatibility Testing}
 
