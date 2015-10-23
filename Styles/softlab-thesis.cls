@@ -1471,16 +1471,6 @@
     \@locationgr, \@date@defense
   \end{flushright}
   \footacknowledgement{%
-    Η εργασία αυτή είναι επίσης διαθέσιμη ως Τεχνική Αναφορά
-    \@TRnumber, Εθνικό Μετσόβιο Πολυτεχνείο, Σχολή Ηλεκτρολόγων
-    Μηχανικών και Μηχανικών Υπολογιστών, Τομέας Τεχνολογίας
-    Πληροφορικής και Υπολογιστών, Εργαστήριο Τεχνολογίας
-    Λογισμικού, \@date.
-    \\[6pt]
-    \begin{tabular}{@{}ll@{}}
-    URL: & \texttt{http://www.softlab.ntua.gr/techrep/} \\
-    FTP: & \texttt{ftp://ftp.softlab.ntua.gr/pub/techrep/}
-    \end{tabular}
   }
   \newpage%
   \endgroup%
@@ -1590,7 +1580,10 @@
   }{%
     \@authorsig
   }}
+  
 }
+
+
 \lowertitleback{%
   {\large
 \if@greek
