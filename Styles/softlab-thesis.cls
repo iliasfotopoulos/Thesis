@@ -441,7 +441,7 @@
 \def\authorsig#1{\gdef\@authorsig{#1}}
 \if@greek
   \ifcase\c@type
-  \or\authorsig{Διπλωματούχος Ηλεκτρολόγος Μηχανικός
+  \or\authorsig{Διπλωματούχος Ηλεκτρολόγος Μηχανικός\\
                 και Μηχανικός Υπολογιστών Ε.Μ.Π.}
   \or\authorsig{}
   \or\authorsig{Διδάκτωρ Πληροφορικής Ε.Μ.Π.}
@@ -1574,21 +1574,26 @@
 \trftp{ftp://ftp.softlab.ntua.gr/pub/techrep/}
 
 \uppertitleback{%
-  \vspace*{4cm}%
-  {\large%
-  \signature[6pt]{%
-    \textbf{\uppercase{\if@greek\@author\else\@authoren\fi}}
-  }{%
-    \@authorsig
-  }}
-  
-}
+    \vspace*{4cm}%
+  {\large
+  \hfill
+  \begin{tabular}{ @{}l@{} }
+    \signature[10pt]{\textbf{\uppercase{Ρεβέκκα Παλαιολόγου}}}{\@authorsig}
+  \end{tabular}
+  \hfill
+  \begin{tabular}{@{}l@{}}
+    \signature[10pt]{\textbf{\uppercase{Φωτόπουλος Ηλίας}}}{\@authorsig}
+  \end{tabular}
+  \hfill
+  \hbox{}
 
+  }
+}
 
 \lowertitleback{%
   {\large
 \if@greek
-  Copyright \copyright\ \ \@author, \@date@year.\\
+  Copyright \copyright\ \ Ρεβέκκα Παλαιολόγου, Φωτόπουλος Ηλίας,  \@date@year.\\
   Με επιφύλαξη παντός δικαιώματος.  All rights reserved.\\[12pt]
 \else
   Copyright \copyright\ \ \@authoren, \@date@year.\\
