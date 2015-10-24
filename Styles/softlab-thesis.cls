@@ -1327,6 +1327,7 @@
 \def\appendixname{Παράρτημα}
 \def\partname{Μέρος}
 \def\abstractname{Περίληψη}
+\def\acknowledgementsname{Ευχαριστίες}
 \def\draftname{Προσχέδιο}
 \def\prefacename{Πρόλογος}
 \def\committeename{Συμβουλευτική επιτροπή}
